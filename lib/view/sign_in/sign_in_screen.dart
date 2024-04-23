@@ -6,7 +6,6 @@ import 'package:adhyan/widgets/app_text_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../routes/app_routes.dart';
 import '../../widgets/app_asset_image.dart';
 

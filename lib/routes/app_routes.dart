@@ -9,6 +9,9 @@ class Routes {
   static const bookDemo = "/bookDemo";
   static const myCourses = "/myCourses";
   static const allCourses = "/allCourses";
+  static const chapters = "/chapters";
+  static const lessonYoutubePlayer = "/lessonYoutubePlayer";
+  // static const lessonPlayer = "/lessonPlayer";
 
 }
 

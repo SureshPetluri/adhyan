@@ -46,7 +46,25 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
           )
         ],
       ),
-      drawer: Drawer(),
+      drawer: Drawer(
+        backgroundColor: Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 150,
+              width: MediaQuery.sizeOf(context).width,
+              color: Colors.blue,
+            ),
+            buildDrawerWidgets(context, Icons.home, "Home"),
+            buildDrawerWidgets(
+                context, Icons.book_online_outlined, "My Courses"),
+            buildDrawerWidgets(
+                context, Icons.book_online_outlined, "Explore Courses"),
+            buildDrawerWidgets(context, Icons.person, "Profile"),
+            buildDrawerWidgets(context, Icons.logout, "Logout"),
+          ],
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
@@ -79,7 +97,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ConstrainedBox(
-                                  constraints: BoxConstraints(
+                                  constraints: const BoxConstraints(
                                     maxWidth: 160,
                                   ),
                                   child: const AppText(
@@ -87,7 +105,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                AppGap(
+                                const AppGap(
                                   h: 15,
                                 ),
                                 AppButton(
@@ -129,7 +147,7 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
             const AppGap(
               h: 15,
             ),
-            Container(
+            SizedBox(
               width: 400,
               child: Card(
                 child: Row(
@@ -139,79 +157,80 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
                       child:
                           Image.asset('asset/images/certification_image.png'),
                     ),
-                    AppGap(
+                    const AppGap(
                       w: 15,
                     ),
                     const Expanded(
-                        flex: 4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AppText('Development'),
-                            AppGap(
-                              h: 10,
-                            ),
-                            AppText('Flutter Development-Beginner Level'),
-                            AppGap(
-                              h: 10,
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.access_time,
-                                  size: 20,
-                                ),
-                                AppGap(
-                                  w: 5,
-                                ),
-                                AppText(
-                                  '42 Hrs',
-                                  fontSize: 12,
-                                ),
-                                AppGap(
-                                  w: 10,
-                                ),
-                                AppText(' | '),
-                                AppGap(
-                                  w: 10,
-                                ),
-                                Icon(
-                                  Icons.my_library_books_rounded,
-                                  size: 20,
-                                ),
-                                AppGap(
-                                  w: 5,
-                                ),
-                                AppText(
-                                  '12 Chapters',
-                                  fontSize: 12,
-                                )
-                              ],
-                            ),
-                            AppGap(
-                              h: 10,
-                            ),
-                            AppText(
-                              '36% Progress',
-                              fontSize: 14,
-                            ),
-                            AppGap(
-                              h: 5,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(right: 16.0),
-                              child: LinearProgressIndicator(
-                                value: 0.36,
-                                minHeight: 8,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
+                      flex: 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppText('Development'),
+                          AppGap(
+                            h: 10,
+                          ),
+                          AppText('Flutter Development-Beginner Level'),
+                          AppGap(
+                            h: 10,
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.access_time,
+                                size: 20,
                               ),
+                              AppGap(
+                                w: 5,
+                              ),
+                              AppText(
+                                '42 Hrs',
+                                fontSize: 12,
+                              ),
+                              AppGap(
+                                w: 10,
+                              ),
+                              AppText(' | '),
+                              AppGap(
+                                w: 10,
+                              ),
+                              Icon(
+                                Icons.my_library_books_rounded,
+                                size: 20,
+                              ),
+                              AppGap(
+                                w: 5,
+                              ),
+                              AppText(
+                                '12 Chapters',
+                                fontSize: 12,
+                              )
+                            ],
+                          ),
+                          AppGap(
+                            h: 10,
+                          ),
+                          AppText(
+                            '36% Progress',
+                            fontSize: 14,
+                          ),
+                          AppGap(
+                            h: 5,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(right: 16.0),
+                            child: LinearProgressIndicator(
+                              value: 0.36,
+                              minHeight: 8,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8.0)),
                             ),
-                            AppGap(
-                              h: 10,
-                            ),
-                          ],
-                        ))
+                          ),
+                          AppGap(
+                            h: 10,
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -221,4 +240,34 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
       ),
     );
   }
+}
+
+Container buildDrawerWidgets(BuildContext context, IconData icon, String text) {
+  return Container(
+    margin: const EdgeInsets.only(top: 20),
+    child: InkWell(
+      borderRadius: BorderRadius.circular(3.0),
+      focusColor: Colors.red,
+      hoverColor: Colors.grey.shade500,
+      highlightColor: Colors.red,
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.only(left: 18.0, top: 10, bottom: 10.0),
+        child: Row(
+          children: [
+            Icon(icon, color: Colors.black),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              text,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            )
+          ],
+        ),
+      ),
+    ),
+  );
 }
