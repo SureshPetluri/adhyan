@@ -11,7 +11,7 @@ class Routes {
   static const allCourses = "/allCourses";
   static const chapters = "/chapters";
   static const lessonYoutubePlayer = "/lessonYoutubePlayer";
-  // static const lessonPlayer = "/lessonPlayer";
+  static const lessonPlayer = "/lessonPlayer";
 
 }
 

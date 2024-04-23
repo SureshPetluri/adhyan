@@ -2,7 +2,6 @@ import 'package:adhyan/view/book_demo/book_demo_screen.dart';
 import 'package:adhyan/view/chapters/chapters_controller.dart';
 import 'package:adhyan/view/chapters/chapters_screen.dart';
 import 'package:adhyan/view/lesson_player/lesson_player_controller.dart';
-import 'package:adhyan/view/lesson_player/lesson_player_screen.dart';
 import 'package:adhyan/view/lesson_player/lesson_youtube_screen.dart';
 import 'package:adhyan/view/reset_password/reset_password_controller.dart';
 import 'package:adhyan/view/reset_password/reset_password_screen.dart';
@@ -53,10 +52,10 @@ class MyApp extends StatelessWidget {
           Routes.myCourses: (context) => const MyCoursesScreen(),
           Routes.allCourses: (context) => const AllCoursesScreen(),
           Routes.chapters: (context) => const ChaptersScreen(),
-          Routes.lessonYoutubePlayer: (context) => const LessonYoutubePlayerScreen(),
-          // Routes.lessonPlayer: (context) => const LessonPlayerScreen(),
+          Routes.lessonYoutubePlayer: (context) =>
+              const LessonYoutubePlayerScreen(),
+          Routes.lessonPlayer: (context) => const LessonPlayerScreen(),
         },
-
         home: const SignInScreen(),
       ),
     );
