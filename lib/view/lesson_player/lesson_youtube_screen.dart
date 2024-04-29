@@ -18,16 +18,17 @@ class LessonYoutubePlayerScreen extends StatefulWidget {
 class _LessonYoutubePlayerScreenState extends State<LessonYoutubePlayerScreen> {
   @override
   void initState() {
-    if (context.read<LessonPlayerController>().isYoutubeVideo == true) {
+    if (context
+        .read<LessonPlayerController>()
+        .isYoutubeVideo == true) {
       context.read<LessonPlayerController>().youtubePlayerInitialization(
-            context,
-            videoId: 'BblraEtrFLI',
-          );
+        context,
+        videoId: 'BblraEtrFLI',
+      );
     } else {
       context.read<LessonPlayerController>().videoInitialization(
           "asset/images/3694919-hd_1080_1920_30fps.mp4", "");
     }
-
     super.initState();
   }
 
@@ -40,186 +41,184 @@ class _LessonYoutubePlayerScreenState extends State<LessonYoutubePlayerScreen> {
       body: Consumer<LessonPlayerController>(builder: (context, controller, _) {
         return controller.isYoutubeVideo
             ? YoutubePlayerScaffold(
-                controller: controller.youtubeVideoController,
-                aspectRatio: 16 / 9,
-                builder: (context, player) {
-                  return SingleChildScrollView(
-                    child: Column(
+          controller: controller.youtubeVideoController,
+          aspectRatio: 16 / 9,
+          builder: (context, player) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  player,
+                  ListView.builder(
+                      controller: controller.scrollController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: controller.videoIds.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            // final controller = Provider.of<LessonPlayerController>(context, listen: false);
+                            // controller.youtubePlayerInitialization(context,videoId: controller.videoIds[index], isPlay: false);
+                            context.ytController.loadVideoById(
+                              videoId: controller.videoIds[index],
+                            );
+                          },
+                          onDoubleTap: () {
+                            context.ytController.loadVideoById(
+                              videoId: controller.videoIds[index],
+                            );
+                          },
+                          child: Card(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0),
+                              height: 70,
+                              width: MediaQuery
+                                  .sizeOf(context)
+                                  .width,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                          ),
+                        );
+                      })
+                ],
+              ),
+            );
+          },
+        )
+            : SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: /*(controller
+                                    .videoController?.value.isInitialized ??
+                                false)
+                            ?*/ AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    color: Colors.black,
+                    child: Stack(
                       children: [
-                        player,
-                        ListView.builder(
-                            controller: controller.scrollController,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.videoIds.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  // final controller = Provider.of<LessonPlayerController>(context, listen: false);
-                                  // controller.youtubePlayerInitialization(context,videoId: controller.videoIds[index], isPlay: false);
-                                  context.ytController.loadVideoById(
-                                    videoId: controller.videoIds[index],
-                                  );
-                                },
-                                onDoubleTap: () {
-                                  context.ytController.loadVideoById(
-                                    videoId: controller.videoIds[index],
-                                  );
-                                },
-                                child: Card(
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16.0),
-                                    height: 70,
-                                    width: MediaQuery.sizeOf(context).width,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
+                        VideoPlayer(controller.videoController!),
+                        Positioned(
+                          bottom: 50.0,
+                          top: 50.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: InkWell(
+                            radius: 0.0,
+                            onTap: ((controller
+                                .videoController?.value
+                                .isInitialized) ?? false) ? () {
+                              controller.playPauseVideo(
+                                  (controller.videoController
+                                      ?.value.isPlaying ??
+                                      false),
+                                  controller.videoController!);
+                            } : null,
+                            child: AnimatedPlayPause(
+                              size: 40.0,
+                              color: Colors.blue,
+                              playing: controller.isPaused =
+                                  controller.videoController!
+                                      .value.isPlaying,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 20.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: Column(
+                            children: [
+                            VideoProgressIndicator(
+                            controller.videoController!,
+                            allowScrubbing: true,
+                            colors: const VideoProgressColors(
+                                backgroundColor: Colors.red,
+                                bufferedColor: Colors.grey,
+                                playedColor: Colors.blue),
+                          ),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                  children: [
+                                  InkWell(
+                                  radius: 0.0,
+                                   onTap:((controller
+                                  .videoController?.value
+                                  .isInitialized) ?? false) ? () {
+                            controller.playPauseVideo(
+                                (controller.videoController
+                                    ?.value.isPlaying ??
+                                    false),
+                                controller.videoController!);
+                          } : null,
+                                  child: AnimatedPlayPause(
+                                    color: Colors.blue,
+                                    playing: controller
+                                        .isPaused =
+                                        controller
+                                            .videoController!
+                                            .value
+                                            .isPlaying,
                                   ),
-                                ),
-                              );
-                            })
+                        ),
+                        Text(
+                          "${controller.startTime}/${controller.endTime}",
+                          style: const TextStyle(
+                              color: Colors.white),
+                        ),
                       ],
                     ),
-                  );
-                },
-              )
-            : Scaffold(
-                body: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Center(
-                          child: (controller
-                                      .videoController?.value.isInitialized ??
-                                  false)
-                              ? AspectRatio(
-                                  aspectRatio: 16 / 9,
-                                  child: Container(
-                                    color: Colors.black,
-                                    child: Stack(
-                                      children: [
-                                        VideoPlayer(
-                                            controller.videoController!),
-                                        Positioned(
-                                          bottom: 50.0,
-                                          top: 50.0,
-                                          left: 0.0,
-                                          right: 0.0,
-                                          child: InkWell(
-                                            radius: 0.0,
-                                            child: AnimatedPlayPause(
-                                              size: 40.0,
-                                              color: Colors.blue,
-                                              playing: controller.isPaused =
-                                                  controller.videoController!
-                                                      .value.isPlaying,
-                                            ),
-                                            onTap: () {
-                                              controller.playPauseVideo(
-                                                  (controller.videoController
-                                                          ?.value.isPlaying ??
-                                                      false),
-                                                  controller.videoController!);
-                                            },
-                                          ),
-                                        ),
-                                        Positioned(
-                                          bottom: 20.0,
-                                          left: 0.0,
-                                          right: 0.0,
-                                          child: Column(
-                                            children: [
-                                              VideoProgressIndicator(
-                                                controller.videoController!,
-                                                allowScrubbing: true,
-                                                colors:
-                                                    const VideoProgressColors(
-                                                        backgroundColor:
-                                                            Colors.red,
-                                                        bufferedColor:
-                                                            Colors.grey,
-                                                        playedColor:
-                                                            Colors.blue),
-                                              ),
-                                              Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Row(
-                                                  children: [
-                                                    InkWell(
-                                                      radius: 0.0,
-                                                      child: AnimatedPlayPause(
-                                                        color: Colors.blue,
-                                                        playing: controller
-                                                                .isPaused =
-                                                            controller
-                                                                .videoController!
-                                                                .value
-                                                                .isPlaying,
-                                                      ),
-                                                      onTap: () {
-                                                        controller.playPauseVideo(
-                                                            (controller
-                                                                    .videoController
-                                                                    ?.value
-                                                                    .isPlaying ??
-                                                                false),
-                                                            controller
-                                                                .videoController!);
-                                                      },
-                                                    ),
-                                                    Text(
-                                                      "${controller.startTime}/${controller.endTime}",
-                                                      style: const TextStyle(
-                                                          color: Colors.white),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ))
-                              : const SizedBox.shrink()),
-                      ListView.builder(
-                          controller: controller.scrollController,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: controller.videoIds.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                context
-                                    .read<LessonPlayerController>()
-                                    .videoInitialization(
-                                        "asset/images/videoplayback.mp4", "");
-                              },
-                              onDoubleTap: () {
-                                context
-                                    .read<LessonPlayerController>()
-                                    .videoInitialization(
-                                        "asset/images/videoplayback.mp4", "");
-                              },
-                              child: Card(
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
-                                  height: 70,
-                                  width: MediaQuery.sizeOf(context).width,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                              ),
-                            );
-                          })
-                    ],
                   ),
+                  ],
                 ),
-              );
+              ),
+            ],
+          ),
+        ))
+        /*: const SizedBox.shrink()*/),
+        ListView.builder(
+        controller: controller.scrollController,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.videoIds.length,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+        return InkWell(
+        onTap: () async{
+        await context
+            .read<LessonPlayerController>()
+            .videoInitialization(
+        "asset/images/videoplayback.mp4", "");
+        },
+        onDoubleTap: () async{
+        await context
+            .read<LessonPlayerController>()
+            .videoInitialization(
+        "asset/images/videoplayback.mp4", "");
+        },
+        child: Card(
+        child: Container(
+        padding: const EdgeInsets.symmetric(
+        horizontal: 16.0),
+        height: 70,
+        width: MediaQuery.sizeOf(context).width,
+        decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(10.0),
+        ),
+        ),
+        ),
+        );
+        })
+        ]
+        ,
+        )
+        ,
+        );
       }),
     );
   }

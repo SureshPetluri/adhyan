@@ -6,7 +6,7 @@ class LessonPlayerController extends ChangeNotifier {
   VideoPlayerController? videoController;
   bool? isPaused;
   String startTime = '';
-  bool isYoutubeVideo = false;
+  bool isYoutubeVideo = true;
   String endTime = '';
    YoutubePlayerController youtubeVideoController = YoutubePlayerController();
   final ScrollController scrollController = ScrollController();
@@ -35,7 +35,6 @@ class LessonPlayerController extends ChangeNotifier {
         loop: false,
       ),
     );
-
     // notifyListeners();
   }
 
@@ -45,8 +44,8 @@ class LessonPlayerController extends ChangeNotifier {
     )..addListener(() {
         if (videoController?.value.hasError ?? false) {
         } else {
-          startTime = videoController!.value.position.toString().split(".")[0];
-          endTime = videoController!.value.duration.toString().split(".")[0];
+          startTime = videoController?.value.position.toString().split(".")[0] ?? "";
+          endTime = videoController?.value.duration.toString().split(".")[0] ?? "";
         }
         notifyListeners();
       });

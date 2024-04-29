@@ -7,13 +7,19 @@ class FormUtils {
   static String? nullOnFieldNotEmpty(value) =>
       value.isEmpty ? 'can\'t be empty' : null;
 
-  static String? checkValue(String? value) {
+  static String? checkValue(String? value,{String text = ""}) {
     if (value == null || value.isEmpty) {
-      return 'can\'t be empty';
+      return '$text can\'t be empty';
     }
     return null;
   }
 
+  static String? checkLength(String? value,{String text = ""}) {
+    if (value == null || value.isEmpty) {
+      return '$text Should be 3 to 70 Characters';
+    }
+    return null;
+  }
   /// Method Validate having digits or not
   static bool hasDigits(String input) {
     return RegExp(r'\d').hasMatch(input);
@@ -89,6 +95,8 @@ class FormUtils {
 
   static bool isPassword(String s) =>
       hasMatch(s, r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+  static bool isPasswordSpec(String s) =>
+      hasMatch(s, r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>/?]).{8,16}$');
 
   /// Method to validate whether the field is of password or not.
   static String? fieldIsPw(String? value) {
@@ -101,6 +109,20 @@ class FormUtils {
       return 'Min 8 chars: 1 uppercase, 1 lowercase letter & 1 digit';
     }
     return isEmptyValidation;
+  }/// Method to validate whether the field is of password or not.
+  static String? fieldIsPwSpec(String? value) {
+    // var isEmptyValidation = nullOnFieldNotEmpty(value);
+    // var boolStringNotEmpty = isEmptyValidation == null;
+
+    if(value == null || value.isEmpty){
+     return  'Password can\'t be empty';
+    }else if (value.isNotEmpty) {
+      if (isPasswordSpec(value) && !RegExp(r'\s+').hasMatch(value)) {
+        return null;
+      }
+      return 'Min 8 chars: 1 uppercase, 1 lowercase letter, 1 digit & 1 Special character';
+    }
+    return null;
   }
 
   static void hideKeyboard(BuildContext context) {
