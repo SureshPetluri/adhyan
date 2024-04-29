@@ -36,7 +36,7 @@ class FormUtils {
     String input = value ?? "";
     if (input.isEmpty) {
       return 'can\'t be empty';
-    } else if (RegExp(r'[0-9+]+$').hasMatch(input) && input.length < 10) {
+    } else if (RegExp(r'[0-9+]+\$').hasMatch(input) && input.length < 10) {
       return "Length should be 10 or more";
     } else if (RegExp(r'[!#\$%^&*()[\],?/":{}|<>\\`~_=-]').hasMatch(input)) {
       return "Enter Valid details";
