@@ -107,7 +107,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   : Icons.visibility),
             ),
             inputFormatter: [
-              FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9_#*()+={}\[\]\-/?%!&\*$@.\+,<>]'))
+              FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9_#*()+={}\[\]\-/?%!&*$@.+,<>]'))
             ],
           ),
           Align(
